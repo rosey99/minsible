@@ -15,10 +15,10 @@ but as these are largely IO bound operations, one should get greater
 density of workers using a threaded approach. Other potential benefits
 might include:
 
-    + Upstream fetching/decryptiion of artifacts (e.g., host vars, certs)
-    + Integration with a workflow system such as Celery Canvas
-    + Integration of multiple tools (e.g., terraform, fabric/fybre) in a single process 
-    + Use Ansible in support of a stateful, immutable infrastructure model
+  * Upstream fetching/decryptiion of artifacts (e.g., host vars, certs)
+  * Integration with a workflow system such as Celery Canvas
+  * Integration of multiple tools (e.g., terraform, fabric/fybre) in a single process 
+  * Use Ansible in support of a stateful, immutable infrastructure model
 
 By default Ansible (much like fabric) will spawn processes, which in 
 turn spawn threads for IO wait operations. Additionally, Ansible (short of 
@@ -27,9 +27,9 @@ heritage as a command-line tool makes it a challenge to implement via anything
 resembling API access. Minsible is an attempt to address these issues 
 and others:
 
-1. Remove process/thread management and delegate this to the caller
-2. Python 3 only, smaller and more readable, and its been only ten years or so?
-3. Return results to the caller (as json), possibly handled by a callback
+  1. Remove process/thread management and delegate this to the caller
+  2. Python 3 only, smaller and more readable, and its been only ten years or so?
+  3. Return results to the caller (as json), possibly handled by a callback
 
 No more orchestration or process management, as (IMHO) this should occur 
 upstream, and our configuration directives should be just that. Think small.
@@ -55,44 +55,44 @@ Getting Started
 
 - Install python 3.5+ if it is not installed, or create a python 3.5+ virtual envirnment.
 
-    python3 -m venv env
+    `python3 -m venv env`
 
 - Clone or download source directory from git, you may need to install git if not already installed.  
 
 - Activate your virtual environment.
 
-    source env/bin/activate
+    `source env/bin/activate`
 
 - Upgrade packaging tools.
 
-    env/bin/pip install --upgrade pip setuptools
+    `env/bin/pip install --upgrade pip setuptools`
 
 - Install the project in editable mode.
 
-    env/bin/pip install -e PATH_TO_MINSIBLE_DIR
+    `env/bin/pip install -e PATH_TO_MINSIBLE_DIR`
 
 - Enter the root directory of your python virtual environment.
 
-    cd env
+    `cd env`
 
 - Run the test playbook.
 
-    python minsible/minsible_playbook.py localhost minsible/testpb.py
+    `python minsible/minsible_playbook.py localhost minsible/testpb.py`
 
 - Or, run it against a real host, using extra vars:
 
-    python minsible/minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" minsible/testpb.yml
+    `python minsible/minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" minsible/testpb.yml`
     
 - Or, update minsible/testvars.yml with your creds, and use a file for variables:
 
-    python minsible/minsible_playbook.py REAL_HOST -e"@minsible/testvars.yml" minsible/testpb.yml
+    `python minsible/minsible_playbook.py REAL_HOST -e"@minsible/testvars.yml" minsible/testpb.yml`
 
 
 ansible-playbook supports a large number of arguments when invoked from the command line, and the 
 test playbook included with minsible is a simple one with only one play, and two tasks:
     
-    1. ping
-    2. setup (gather facts) 
+  1. ping
+  2. setup (gather facts) 
 
 By default, the '__main__' hook will save the results to a json file, in the directory where 
 the command is run. Successive runs overwrite the results by host and playbook name. 
