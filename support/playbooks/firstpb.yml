@@ -1,0 +1,73 @@
+
+---
+- hosts: localhost
+  remote_user: richard
+  gather_facts: no
+  vars:
+    user_home: /home/richard
+  tasks:
+    - name: test connection
+      ping:
+    - name: verify postgres is installed
+      become: yes
+      apt:
+        name: postgresql
+        state: present
+    - name: verify rabbit is installed
+      become: yes
+      apt:
+        name: rabbitmq-server
+        state: present
+    - name: verify build-essential is installed
+      become: yes
+      apt:
+        name: build-essential
+        state: present
+    - name: verify openssl is installed
+      become: yes
+      apt:
+        name: libssl-dev
+        state: present
+    - name: create python3 venv
+      become: no
+      pip:
+        requirements:
+        virtualenv: "{{user_home}}/vp36a"
+        virtualenv_command: /usr/bin/python3 -m venv
+    - name: install celery
+      become: no
+      pip:
+        name: celery
+        state: present
+        virtualenv: "{{user_home}}/vp36a"
+    - name: install circus
+      become: no
+      pip:
+        name: circus
+        state: present
+        virtualenv: "{{user_home}}/vp36a"
+    - name: install psycopg2
+      become: no
+      pip:
+        name: psycopg2
+        state: present
+        virtualenv: "{{user_home}}/vp36a"
+    - name: install sqlalchemy
+      become: no
+      pip:
+        name: sqlalchemy
+        state: present
+        virtualenv: "{{user_home}}/vp36a"
+    - name: install eventlet
+      become: no
+      pip:
+        name: eventlet
+        state: present
+        virtualenv: "{{user_home}}/vp36a"
+    - name: install gevent
+      become: no
+      pip:
+        name: gevent
+        state: present
+        virtualenv: "{{user_home}}/vp36a"
+        

@@ -1,0 +1,13 @@
+
+---
+- hosts: all
+  remote_user: richard
+  gather_facts: no
+  tasks:
+    - name: test connection
+      ping:
+    - name: verify postgres is running
+      service:
+        name: postgresql
+        state: started
+        

@@ -1,0 +1,4 @@
+#
+ansible_ssh_pass: rosey99
+ansible_become_pass: rosey99
+
