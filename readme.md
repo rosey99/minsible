@@ -15,10 +15,10 @@ but as these are largely IO bound operations, one should get greater
 density of workers using a threaded approach. Other potential benefits
 might include:
 
-    *Upstream fetching/decryptiion of artifacts (e.g., host vars, certs)
-    *Integration with a workflow system such as Celery Canvas
-    *Integration of multiple tools (e.g., terraform, fabric/fybre) in a single process 
-    *Use Ansible in support of a stateful, immutable infrastructure model
+    + Upstream fetching/decryptiion of artifacts (e.g., host vars, certs)
+    + Integration with a workflow system such as Celery Canvas
+    + Integration of multiple tools (e.g., terraform, fabric/fybre) in a single process 
+    + Use Ansible in support of a stateful, immutable infrastructure model
 
 By default Ansible (much like fabric) will spawn processes, which in 
 turn spawn threads for IO wait operations. Additionally, Ansible (short of 
@@ -27,9 +27,9 @@ heritage as a command-line tool makes it a challenge to implement via anything
 resembling API access. Minsible is an attempt to address these issues 
 and others:
 
-    1. Remove process/thread management and delegate this to the caller
-    2. Python 3 only, smaller and more readable, and its been only ten years or so?
-    3. Return results to the caller (as json), possibly handled by a callback
+1. Remove process/thread management and delegate this to the caller
+2. Python 3 only, smaller and more readable, and its been only ten years or so?
+3. Return results to the caller (as json), possibly handled by a callback
 
 No more orchestration or process management, as (IMHO) this should occur 
 upstream, and our configuration directives should be just that. Think small.
