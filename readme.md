@@ -67,7 +67,7 @@ Getting Started
 
     `env/bin/pip install --upgrade pip setuptools`
 
-- Install the project in editable mode.
+- Install the project in editable mode. This should also install the latest Ansible.
 
     `env/bin/pip install -e PATH_TO_MINSIBLE_DIR`
 
