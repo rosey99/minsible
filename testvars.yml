@@ -1,4 +1,4 @@
 #
-ansible_ssh_pass: rosey99
-ansible_become_pass: rosey99
+ansible_ssh_pass: SSH_PASSWORD_HERE
+ansible_become_pass: BECOME_PASS_HERE
 
