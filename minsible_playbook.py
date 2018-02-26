@@ -2,17 +2,10 @@ import sys
 import os
 import logging
 import threading
-from minsible.monkey import thread_monkey
 from multiprocessing import Queue as MPQ
 from collections import ChainMap
 # Assumes logging is configured upstream, e.g., celery
 logger = logging.getLogger(__name__)
-#~ ch = logging.StreamHandler(sys.stdout)
-#~ ch.setLevel(logging.INFO)
-#~ formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-#~ ch.setFormatter(formatter)
-#~ logger.addHandler(ch)
-#~ logger.setLevel(logging.INFO)
 
 # we'll go with a class based approach to 
 # wrap the ansible runtime environment
@@ -250,11 +243,11 @@ if __name__ == '__main__':
     # returns a dict, with a single entry as this
     # handles a single host only, writes to a file
     # in the current directory (or tries to)
-    import time
+    #import time
     import json
-    stime = str(time.time())
+    #stime = str(time.time())
     #make a file name with the host, filename, and time
-    fname = '_'.join([args[0], pbpath.split('/')[-1], stime, '.json'])
+    fname = '_'.join([args[0], pbpath.split('/')[-1], '.json'])
     try:
         f = open(fname, 'w')
         f.write(json.dumps(r, indent=True))

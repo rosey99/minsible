@@ -19,9 +19,9 @@ setup(
     version='0.1',
     description='Minimal thread-safe Ansible implementation. Really minimal.',
     author='Richard Rosenberg',
-    author_email='richard.rosenberg@pollosalvaje.com',
+    author_email='rosey.div@gmail.com',
     maintainer='Richard Rosenberg',
-    maintainer_email='richard.rosenberg@pollosalvaje.com',
+    maintainer_email='rosey.div@gmail.com',
     url='https://github.com/rosey99/minsible/',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
