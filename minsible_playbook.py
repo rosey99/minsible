@@ -20,11 +20,9 @@ class MinsibleRuntime:
       ds = open('PATH_TO_PLAYBOOK.yml', 'r').read()
       play_count = minruntime.load_playbook( ds, {'VAR1': 'VAL1', 'VAR2': 'VAL2', ...} ) 
       
-    output map is a dict of callables keyed by ansible module name,
-    and will override the default output formatter. Each callable in the 
-    map must take two arguments:
-      FORMAT_OUTPUT(self, result) --> returns a single dict for json dumps
-      
+    output_map is a dict of callables keyed by ansible module name,
+    and will override the default output formatter. See the doc string for
+    format_result, below.
     """
     def __init__(self, cliObj: 'minsible.minsibleCLI.MinsibleCLI', output_map: dict={}):
         self.failed = False
@@ -202,7 +200,9 @@ class MinsibleRuntime:
         # by default, we move the invocation dict to the top
         # for easier access in our callback
         invocd = result.pop('invocation') #this should always be here
-        return {'modname': modname, 'taskname': taskname, 'invocation': invocd, 'result': result }
+        invocd['modname'] = modname
+        invocd['taskname'] = taskname
+        return {'invocation': invocd, 'result': result }
             
 
 
@@ -256,7 +256,11 @@ if __name__ == '__main__':
         # ignore this
         fname = 'File <{}> write failed with error: {}'.format(fname, e)
     finally:
-        f.close()
+        try:
+            f.close()
+        except:
+            pass
+            
     fcount = 0
     ccount = 0
     for k,v in r.items():
