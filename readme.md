@@ -76,7 +76,7 @@ running on your local machine:
 
 - Install the latest Ansible, along with the wheel package for MarkupSafe:
 
-    `pip install wheel ansible'
+    `pip install wheel ansible`
     
   In a fresh venv, this will likely install a number of Ansible dependencies.
   
@@ -95,11 +95,11 @@ running on your local machine:
 
 - Or, run it against a real host, using extra vars:
 
-    `python minsible/minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" minsible/testpb.yml`
+    ```python minsible/minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" minsible/testpb.yml```
     
 - Or, update minsible/testvars.yml with your creds, and use a file for variables:
 
-    `python minsible/minsible_playbook.py REAL_HOST -e"@minsible/testvars.yml" minsible/testpb.yml`
+    ```python minsible/minsible_playbook.py REAL_HOST -e"@minsible/testvars.yml" minsible/testpb.yml```
 
 
 ansible-playbook supports a large number of arguments when invoked from the command line, and the 
