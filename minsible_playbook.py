@@ -7,6 +7,9 @@ from collections import ChainMap
 # Assumes logging is configured upstream, e.g., celery
 logger = logging.getLogger(__name__)
 
+from typing import Sequence, Mapping, AnyStr, Any, Union, Callable #generic/abstract types
+from typing import Dict, Tuple, List #concrete
+
 # we'll go with a class based approach to 
 # wrap the ansible runtime environment
 class MinsibleRuntime:
@@ -204,31 +207,45 @@ class MinsibleRuntime:
         invocd['taskname'] = taskname
         return {'invocation': invocd, 'result': result }
             
-
+def runMinsible(host: str, ansvars: Mapping, playbooks: Sequence[str], *opts):
+    """
+    Automation hook
+    """
+    from minsible.minsibleCLI import MinsibleCLI as mCLI
+    # a bit of a pita, but we need to reconstruct the args 
+    # for ansible in a specific way, host, opts, playbooks
+    res = {}
+    args = [host] + list(opts)
+    if playbooks:
+        args.extend(playbooks)
+    else:
+        logger.warn('No playbooks to play, exiting.')
+        return {'invocation': {'failed': True, 'errs': ['Missing playbooks arg']}}
+    pbcli = mCLI(args)
+    pbcli.parse()
+    # get the runtime wrapper/instrumentation
+    mruntime = MinsibleRuntime(pbcli)
+    for playbook in playbooks:
+        mruntime.load_playbook(playbook, {})
+        r = mruntime.run_all(ansvars)
+        for k, v in r.items():
+            l = res.setdefault(k, [])
+            l.extend(v)
+    return res
 
 if __name__ == '__main__':
     ## Really for testing ansible args from the command line
     ##  simple and no real parsing here, we strip off
     ##  the first arg, as typically we instantiate the
     ##  minsibleCLI from a python app
+    ## calling from CLI, executes only one playbook
     args = sys.argv[1:]
-    from minsible.minsibleCLI import MinsibleCLI as mCLI
-    #get a cli reference, let ansible parse and raise any errors
-    # to be caught downstream, e.g., if args are empty
-    pbcli = mCLI(args)
-    pbcli.parse()
-    # get the runtime wrapper/instrumentation
-    mruntime = MinsibleRuntime(pbcli)
-    # pb shd be the last arg, no check as --help already happened if 
-    #  it happened. Implement a proper first-pass parser later ;)
     pbpath = args[-1] 
     if len(args) > 1:
         try:
             #try and open the file, no parsing/modifying path
             f = open(pbpath, 'r')
             ds = f.read()
-            #load playbook, and for testing pass in empty play vars
-            mruntime.load_playbook(ds, {})
         except Exception as e:
             sys.exit('Opening/Reading playbook at <{}> raised an error: {}'.format(pbpath, str(e)))
         finally:
@@ -238,12 +255,10 @@ if __name__ == '__main__':
                 pass
     else:
         sys.exit('You must supply at least a host and playbook path as args:\n  HOSTNAME [ansible_options] path_to_playbook.yml')
-    # for testing we use an empty dict of vars
-    r = mruntime.run_all({})
+    r = runMinsible(args[0], {}, [ds], *args[1:-1])
     # returns a dict, with a single entry as this
     # handles a single host only, writes to a file
     # in the current directory (or tries to)
-    #import time
     import json
     #stime = str(time.time())
     #make a file name with the host, filename, and time

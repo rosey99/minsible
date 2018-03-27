@@ -1,3 +1,7 @@
 __pycache__
 __pycache__/
 *.pyc
+minsible.egg-info
+minsible.egg-info/
+_config.yml
+
