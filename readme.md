@@ -1,5 +1,4 @@
-minsible
-========
+# minsible
 
 Minsible is a python 3.5+ version of Ansible, which is designed to 
 run "along side" Ansible as an addon. A such, it depends on Ansible.
@@ -19,6 +18,8 @@ might include:
   * Integration with a workflow system such as Celery Canvas
   * Integration of multiple tools (e.g., terraform, fabric/fybre) in a single process 
   * Use Ansible in support of a stateful, immutable infrastructure model
+
+### Design Rationale
 
 By default Ansible (much like fabric) will spawn processes, which in 
 turn spawn threads for IO wait operations. Additionally, Ansible (short of 
@@ -49,15 +50,21 @@ objects that maintain internal application state. This could change in the
 future. This does not affect operation when run inside a process-pool as opposed 
 to a thread-pool. Works both ways. 
 
+## Getting Started
 
-Getting Started
----------------
+For development and testing purposes, follow these steps to get minsible up and 
+running on your local machine:
+
+### Prerequisites
 
 - Install python 3.5+ if it is not installed, or create a python 3.5+ virtual envirnment.
+  Feel free to choose a more inspired name, here we are using 'env.'
 
     `python3 -m venv env`
 
-- Clone or download source directory from git, you may need to install git if not already installed.  
+- Enter the root directory of your python virtual environment.
+
+    `cd env`
 
 - Activate your virtual environment.
 
@@ -65,15 +72,22 @@ Getting Started
 
 - Upgrade packaging tools.
 
-    `env/bin/pip install --upgrade pip setuptools`
+    `pip install --upgrade pip setuptools`
 
-- Install the project in editable mode. This should also install the latest Ansible.
+- Install the latest Ansible, along with the wheel package for MarkupSafe:
 
-    `env/bin/pip install -e PATH_TO_MINSIBLE_DIR`
+    `pip install wheel ansible'
+    
+  In a fresh venv, this will likely install a number of Ansible dependencies.
+  
+### Installing
 
-- Enter the root directory of your python virtual environment.
+- Clone or download the minsible source directory from git, you may need to install git if not already installed. 
+  To install directly using pip:
+  
+    `pip install -e git+https://github.com/rosey99/minsible.git#egg=minsible`
 
-    `cd env`
+## Running the Sample Playbook
 
 - Run the test playbook.
 
@@ -101,11 +115,28 @@ they can be evaluated by a human or used in a callback.
 
 Run from the command line, as in above, the output should look like this:
 
+```
     Host:  dbn11
     Task count:  2
     Fail count:  0
     Changed count:  0
     Results in file:  dbn11_testpb.yml_.json
+```
 
+## Built With
 
-Enjoy!
+* Ansible, obviously ;)
+
+## Authors
+
+* **Richard Rosenberg**
+
+## License
+
+This project is licensed under GNU GPL V3, as this matches the Ansible license. Please see the LICENSE file for details.
+
+## Acknowledgments
+
+* Michael DeHaan, the original author of Ansible
+* The Ansible devs and their numerous contributors mean there's a module for everything. . .
+
