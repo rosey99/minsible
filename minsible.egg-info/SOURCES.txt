@@ -1,8 +1,0 @@
-README.txt
-setup.py
-minsible.egg-info/PKG-INFO
-minsible.egg-info/SOURCES.txt
-minsible.egg-info/dependency_links.txt
-minsible.egg-info/not-zip-safe
-minsible.egg-info/requires.txt
-minsible.egg-info/top_level.txt
