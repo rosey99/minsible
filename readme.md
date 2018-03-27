@@ -95,7 +95,9 @@ running on your local machine:
 
 - Or, run it against a real host, using extra vars:
 
-    ```python minsible/minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" minsible/testpb.yml```
+    ```
+    python minsible/minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" minsible/testpb.yml
+    ```
     
 - Or, update minsible/testvars.yml with your creds, and use a file for variables:
 
