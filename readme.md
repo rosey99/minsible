@@ -91,9 +91,25 @@ running on your local machine:
 
 - Run the test playbook.
 
-    `python minsible/minsible_playbook.py localhost minsible/testpb.py`
+  Note: pip in editable mode (the -e switch) installs projects from git in the src directory of your venv. . .
+
+    `python -m minsible_playbook localhost src/minsible/testpb.yml`
+  
+  Alternatively, one can clone it directly:
+  
+    `git clone git@github.com:rosey99/minsible.git`  
+
+  Which will create the directory "minisble" and install it there, run it like so:
+  
+    `python minsible/minsible_playbook.py localhost minsible/testpb.yml`
 
 - Or, run it against a real host, using extra vars:
+
+    ```
+    python -m minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" src/minsible/testpb.yml
+    ```
+
+  Or, if cloned using git clone, thusly:
 
     ```
     python minsible/minsible_playbook.py REAL_HOST -e"{'ansible_ssh_pass':'MY_SSH_PASSWORD', 'ansible_become_pass':'MY_BECOME_PASSWORD'}" minsible/testpb.yml
@@ -101,8 +117,11 @@ running on your local machine:
     
 - Or, update minsible/testvars.yml with your creds, and use a file for variables:
 
+    ```python -m minsible_playbook.py REAL_HOST -e"@minsible/testvars.yml" src/minsible/testpb.yml```
+    
+  Or, for cloners:
+  
     ```python minsible/minsible_playbook.py REAL_HOST -e"@minsible/testvars.yml" minsible/testpb.yml```
-
 
 ansible-playbook supports a large number of arguments when invoked from the command line, and the 
 test playbook included with minsible is a simple one with only one play, and two tasks:
