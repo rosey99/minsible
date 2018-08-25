@@ -211,11 +211,18 @@ def runMinsible(host: str, ansvars: Mapping, playbooks: Sequence[str], *opts):
     """
     Automation hook
     """
-    from minsible.minsibleCLI import MinsibleCLI as mCLI
+    # for command line exec
+    try:
+        from minsible.minsibleCLI import MinsibleCLI as mCLI
+    except ImportError:
+        from minsibleCLI import MinsibleCLI as mCLI
+        
     # a bit of a pita, but we need to reconstruct the args 
     # for ansible in a specific way, host, opts, playbooks
     res = {}
     args = [host] + list(opts)
+    if host == 'localhost':
+        args.append('--connection=local')
     if playbooks:
         args.extend(playbooks)
     else:
